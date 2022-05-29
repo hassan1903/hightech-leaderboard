@@ -1,0 +1,37 @@
+{
+  "root": true,
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false,
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:jest/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": ["eslint-comments", "import", "jest", "jsx-a11y", "prettier", "react", "react-hooks"],
+  "rules": {
+    "no-undef": 0,
+    "no-unused-vars": 1,
+    "no-case-declarations": 1
+  },
+  "globals": {
+    "__DEV__": true
+  }
+}

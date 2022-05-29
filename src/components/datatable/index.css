@@ -1,0 +1,59 @@
+.container {
+  overflow-x: auto !important;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+table thead {
+  border-bottom: 2px solid #e5e5e5;
+}
+
+table th,
+table td {
+  padding: 1em 0.5em;
+  position: relative;
+}
+
+table th {
+  letter-spacing: 0.025em;
+  outline: none;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}
+
+table th:hover,
+table th:focus {
+  color: #83e4e2;
+}
+
+table th:after {
+  border-bottom: 0;
+  border-top-color: rgba(255, 255, 255, 0.25);
+  margin-top: 0.35em;
+}
+
+table th:hover:before,
+table th:focus:before {
+  border-bottom-color: rgba(255, 255, 255, 0.75);
+}
+
+table th:hover:after,
+table th:focus:after {
+  border-top-color: rgba(255, 255, 255, 0.75);
+}
+table tbody > tr {
+  border-color: rgba(162, 237, 86, 0.5);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+table tbody > tr:hover {
+  background-color: rgba(162, 237, 86, 0.25);
+  border-color: rgba(162, 237, 86, 1);
+  color: #fff;
+}
