@@ -110,18 +110,18 @@ const DataTable = (props: PropsType) => {
           eEgg ? "🐣" : eEgg === undefined ? "👻" : "🥚"
         }`}</td>
         <td data-label="Score">{`💰 ${score ?? 0}`}</td>
-        <td data-label="HandBag">
+        <td data-label="Hand / Bag">
           <span>{`🖐 ${scoreInHand ?? 0}`}</span>
           <br />
           <span>{`🎒 ${scoreInBag ?? 0}`}</span>
         </td>
-        <td data-label="CurrentMaze">{currentMaze ? currentMaze : "-"}</td>
+        <td data-label="Current Maze">{currentMaze ? currentMaze : "-"}</td>
         {sortedMazePlayInfos
           ? sortedMazePlayInfos.map(
               ({ name, hasBeenPlayed, obtainedReward, potentialReward }, index) => {
                 const progress = obtainedReward ? (potentialReward * 100) / obtainedReward : 0
                 return (
-                  <td key={`maze_${index}`} data-label={name.replaceAll(" ", "")}>
+                  <td key={`maze_${index}`} data-label={index + 1}>
                     <div className="progressContainer">
                       <div
                         style={{
@@ -136,7 +136,7 @@ const DataTable = (props: PropsType) => {
               }
             )
           : renderEmptyMazeInfos()}
-        <td data-label="HTTPGRPC">{`${invocationsViaHTTP ?? 0} / ${invocationsViaGRPC ?? 0}`}</td>
+        <td data-label="HTTP / GRPC">{`${invocationsViaHTTP ?? 0} / ${invocationsViaGRPC ?? 0}`}</td>
       </tr>
     )
   }

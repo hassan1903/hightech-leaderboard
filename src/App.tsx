@@ -126,6 +126,21 @@ const App = () => {
           }} */
         />
       </div>
+      <div className="footerContainer">
+        <span className="footerItem">{"1 Dig Down the coins"}</span>
+        <span className="footerItem">{"2 Don't forget to collect"}</span>
+        <span className="footerItem">{"3 Easy To Collect"}</span>
+        <span className="footerItem">{"4 Easy deal"}</span>
+        <span className="footerItem">{"5 Example Maze"}</span>
+        <span className="footerItem">{"6 Exit"}</span>
+        <span className="footerItem">{"7 Glasses"}</span>
+        <span className="footerItem">{"8 Hello Maze"}</span>
+        <span className="footerItem">{"9 Loops"}</span>
+        <span className="footerItem">{"10 Needle"}</span>
+        <span className="footerItem">{"11 PacMan"}</span>
+        <span className="footerItem">{"12 Reverse"}</span>
+        <span className="footerItem">{"13 Spiral Of Doom"}</span>
+      </div>
     </div>
   )
 }

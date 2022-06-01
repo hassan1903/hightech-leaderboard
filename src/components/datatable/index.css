@@ -15,7 +15,7 @@ table thead {
 
 table th,
 table td {
-  padding: 1em 0.5em;
+  padding: 0.65em 0.5em;
   position: relative;
 }
 
@@ -65,4 +65,45 @@ table tbody > tr:hover {
   border-style: solid;
   border-width: 0.9px 0.9px 0.9px 0.9px;
   background-color: rgba(230, 230, 230, 1);
+}
+
+@media (max-width: 1080px) {
+  table tr,
+  table td {
+    display: block;
+  }
+
+  table tr {
+    padding: 0.75em 0;
+  }
+
+  table thead tr {
+    text-align: center;
+  }
+
+  table th {
+    display: none;
+  }
+
+  table td {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  table td:before {
+    text-align: left;
+    content: attr(data-label);
+    left: 0.5em;
+    position: absolute;
+    width: 100%;
+  }
+
+  .progressContainer {
+    margin: 0 auto;
+    width: 40px;
+    height: 20px;
+    border-style: solid;
+    border-width: 0.9px 0.9px 0.9px 0.9px;
+    background-color: rgba(230, 230, 230, 1);
+  }
 }
