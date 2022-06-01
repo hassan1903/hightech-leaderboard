@@ -57,3 +57,12 @@ table tbody > tr:hover {
   border-color: rgba(162, 237, 86, 1);
   color: #fff;
 }
+
+.progressContainer {
+  margin: 0 auto;
+  width: 20px;
+  height: 40px;
+  border-style: solid;
+  border-width: 0.9px 0.9px 0.9px 0.9px;
+  background-color: rgba(230, 230, 230, 1);
+}

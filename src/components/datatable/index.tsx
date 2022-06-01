@@ -34,9 +34,9 @@ export interface ItemsType {
 }
 
 interface PropsType {
-  data: Array<ItemsType>
+  data: Array<ItemsType> | null
   style?: Object
-  onRowClick: (item: ItemsType) => void
+  onRowClick?: (item: ItemsType) => void
 }
 
 const DataTable = (props: PropsType) => {
@@ -46,6 +46,19 @@ const DataTable = (props: PropsType) => {
     { label: "Score", value: "score" },
     { label: "Hand / Bag", value: "handbag" },
     { label: "Current Maze", value: "currentMaze" },
+    { label: "1", value: "digDown" },
+    { label: "2", value: "dontForget" },
+    { label: "3", value: "easyToCollect" },
+    { label: "4", value: "easyDeal" },
+    { label: "5", value: "exampleMaze" },
+    { label: "6", value: "exit" },
+    { label: "7", value: "glasses" },
+    { label: "8", value: "helloMaze" },
+    { label: "9", value: "loops" },
+    { label: "10", value: "needle" },
+    { label: "11", value: "pacman" },
+    { label: "12", value: "reverse" },
+    { label: "13", value: "spiralOfDoom" },
     { label: "HTTP / GRPC", value: "invocations" }
   ]
 
@@ -65,12 +78,33 @@ const DataTable = (props: PropsType) => {
     )
   }
 
+  const renderEmptyMazeInfos = () => {
+    const renderCol = []
+    for (let index = 0; index < 13; index++) {
+      renderCol.push(
+        <td key={`maze_${index}`}>
+          <div className="progressContainer" />
+        </td>
+      )
+    }
+    return renderCol
+  }
+
   const renderTableBody = (item: ItemsType, index: number) => {
-    const { currentMaze, eEgg, name, playerId, score, scoreInHand, scoreInBag } =
+    const { currentMaze, eEgg, mazePlayInfos, name, playerId, score, scoreInHand, scoreInBag } =
       item?.playerProgress || {}
+    const sortedMazePlayInfos = mazePlayInfos?.sort(
+      (a: MazePlayInfosTypes, b: MazePlayInfosTypes) => {
+        const elemA = a.name.toLowerCase()
+        const elemB = b.name.toLowerCase()
+        return elemA.toString().localeCompare(elemB.toString(), "en", {
+          numeric: true
+        })
+      }
+    )
     const { invocationsViaHTTP, invocationsViaGRPC } = item?.invocations || {}
     return (
-      <tr key={playerId ?? index} onClick={() => props.onRowClick(item)}>
+      <tr key={playerId ?? index} onClick={() => props.onRowClick && props.onRowClick(item)}>
         <td data-label="#">{index + 1}</td>
         <td data-label="Name">{`${name ?? "Unknown"} ${
           eEgg ? "🐣" : eEgg === undefined ? "👻" : "🥚"
@@ -82,20 +116,42 @@ const DataTable = (props: PropsType) => {
           <span>{`🎒 ${scoreInBag ?? 0}`}</span>
         </td>
         <td data-label="CurrentMaze">{currentMaze ? currentMaze : "-"}</td>
+        {sortedMazePlayInfos
+          ? sortedMazePlayInfos.map(
+              ({ name, hasBeenPlayed, obtainedReward, potentialReward }, index) => {
+                const progress = obtainedReward ? (potentialReward * 100) / obtainedReward : 0
+                return (
+                  <td key={`maze_${index}`} data-label={name.replaceAll(" ", "")}>
+                    <div className="progressContainer">
+                      <div
+                        style={{
+                          height: `${progress}%`,
+                          borderStyle: "solid",
+                          backgroundColor: hasBeenPlayed ? "rgba(0,179,51,1)" : undefined
+                        }}
+                      />
+                    </div>
+                  </td>
+                )
+              }
+            )
+          : renderEmptyMazeInfos()}
         <td data-label="HTTPGRPC">{`${invocationsViaHTTP ?? 0} / ${invocationsViaGRPC ?? 0}`}</td>
       </tr>
     )
   }
 
+  const renderBody = React.useCallback(() => {
+    return props.data?.map((item: ItemsType, index: number) =>
+      item ? renderTableBody(item, index) : null
+    )
+  }, [props?.data])
+
   return (
     <div className="container" style={props.style}>
       <table>
         {renderTableHead()}
-        <tbody>
-          {props.data?.map((item: ItemsType, index: number) =>
-            item ? renderTableBody(item, index) : null
-          )}
-        </tbody>
+        <tbody>{renderBody()}</tbody>
       </table>
     </div>
   )
