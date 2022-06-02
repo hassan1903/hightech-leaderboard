@@ -28,7 +28,7 @@
   "plugins": ["eslint-comments", "import", "jest", "jsx-a11y", "prettier", "react", "react-hooks"],
   "rules": {
     "no-undef": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": 0,
     "no-case-declarations": 1
   },
   "globals": {

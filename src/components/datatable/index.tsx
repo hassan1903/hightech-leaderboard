@@ -20,7 +20,7 @@ export interface PlayerProgressType {
   eEgg: boolean
 }
 
-interface InvocationsType {
+export interface InvocationsType {
   playerId: string
   invocationsViaHTTP: number
   invocationsViaGRPC: number
@@ -35,6 +35,7 @@ export interface ItemsType {
 
 interface PropsType {
   data: Array<ItemsType> | null
+  playerId: string | null
   style?: Object
   onRowClick?: (item: ItemsType) => void
 }
@@ -118,16 +119,32 @@ const DataTable = (props: PropsType) => {
         <td data-label="Current Maze">{currentMaze ? currentMaze : "-"}</td>
         {sortedMazePlayInfos
           ? sortedMazePlayInfos.map(
-              ({ name, hasBeenPlayed, obtainedReward, potentialReward }, index) => {
-                const progress = obtainedReward ? (potentialReward * 100) / obtainedReward : 0
+              ({ hasBeenPlayed, name, obtainedReward, potentialReward }, index) => {
+                const isCurrent =
+                  props.playerId === playerId &&
+                  (scoreInHand || scoreInBag) &&
+                  currentMaze === name &&
+                  !hasBeenPlayed
+                const progress = isCurrent
+                  ? ((scoreInHand || scoreInBag) * 100) / potentialReward
+                  : obtainedReward
+                  ? (potentialReward * 100) / obtainedReward
+                  : 0
                 return (
                   <td key={`maze_${index}`} data-label={index + 1}>
                     <div className="progressContainer">
+                      {isCurrent && progress < 100 ? (
+                        <div
+                          style={{
+                            height: `${100 - progress}%`,
+                            backgroundColor: "transparent"
+                          }}
+                        />
+                      ) : null}
                       <div
                         style={{
                           height: `${progress}%`,
-                          borderStyle: "solid",
-                          backgroundColor: hasBeenPlayed ? "rgba(0,179,51,1)" : undefined
+                          backgroundColor: isCurrent ? "rgba(0,128,204,1)" : "rgba(0,179,51,1)"
                         }}
                       />
                     </div>
@@ -136,7 +153,9 @@ const DataTable = (props: PropsType) => {
               }
             )
           : renderEmptyMazeInfos()}
-        <td data-label="HTTP / GRPC">{`${invocationsViaHTTP ?? 0} / ${invocationsViaGRPC ?? 0}`}</td>
+        <td data-label="HTTP / GRPC">{`${invocationsViaHTTP ?? 0} / ${
+          invocationsViaGRPC ?? 0
+        }`}</td>
       </tr>
     )
   }
